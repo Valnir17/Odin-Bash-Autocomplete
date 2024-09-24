@@ -1,4 +1,6 @@
-# Define the commands
+#!/usr/bin/env bash
+
+#Define the commands
 _odin_commands="build check doc report root run strip-semicolon test version"
 
 # Define the completion function
@@ -10,14 +12,14 @@ _odin_completions() {
 
     # Complete commands
     if [[ ${COMP_CWORD} -eq 1 ]]; then
-        COMPREPLY=( $(compgen -W "${_odin_commands}" -- ${cur}) )
+        COMPREPLY=( $(compgen -W "${_odin_commands}" -- "${cur}") )
         return 0
     fi
 
     # Complete targets (files in the current directory or ".")
     if [[ ${COMP_CWORD} -eq 2 && "$prev" != "report" && "$prev" != "version" && "$prev" != "root" ]]; then
         local files=$(find . -maxdepth 1 -type f -printf "%f\n")
-        COMPREPLY=( $(compgen -W "${files} ." -- ${cur}) )
+        COMPREPLY=( $(compgen -W "${files} ." -- "${cur}") )
         return 0
     fi
 
@@ -29,7 +31,7 @@ _odin_completions() {
     # Special case for -o: flag [Currently not working!]
     if [[ "${COMP_WORDS[1]}" == "odin" && "${cur}" == "-o:" ]]; then
         opts="size none speed minimal"
-        COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+        COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
         return 0
     fi
 
@@ -108,7 +110,7 @@ _odin_completions() {
             "
             compopt -o nospace -o noquote
 
-            COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             ;;
         check)
             opts="
@@ -157,7 +159,7 @@ _odin_completions() {
                 -foreign-error-procedures
             "
             compopt -o nospace -o noquote
-            COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             ;;
         doc)
             opts="
@@ -167,11 +169,11 @@ _odin_completions() {
                 -doc-format
                 -out:
             "
-            COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             ;;
         run)
             opts="                
-            	-file
+                -file
                 -show-timings
                 -show-more-timings
                 -show-system-calls
@@ -218,7 +220,7 @@ _odin_completions() {
                 -foreign-error-procedures
             "
             compopt -o nospace -o noquote
-            COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             ;;
         strip-semicolon)
             opts="
@@ -269,7 +271,7 @@ _odin_completions() {
             -foreign-error-procedures
             "
             compopt -o nospace -o noquote
-            COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             ;;
         test)
             opts="
@@ -339,11 +341,11 @@ _odin_completions() {
 
              "
             compopt -o nospace -o noquote
-            COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             ;;
         *)
             opts=""
-            COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             ;;
     esac
 
