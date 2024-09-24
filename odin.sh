@@ -73,7 +73,7 @@ _odin_completions() {
                 -vet-unused-variables
                 -vet-unused-imports
                 -vet-shadowing
-                vet-using-stmt
+                -vet-using-stmt
                 -vet-using-param
                 -vet-style
                 -vet-semicolon
